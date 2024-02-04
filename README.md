@@ -11,7 +11,7 @@
 ```
 
 All user modifications, including mutation of nested lists or dicts, are
-synchronized to the Redis server.
+immediately synchronized to the Redis server.
 
 ## Design Requirements
 
