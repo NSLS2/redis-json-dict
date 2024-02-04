@@ -1,6 +1,19 @@
 # redis-dict-json
 
-## Requirements
+## Usage
+
+```py
+>>> import redis
+>>> redis_client = redis.Redis('localhost', 6379)
+>>> d = RedisJSONDict(redis_client, prefix='my_dict')
+>>> d
+{}
+```
+
+All user modifications, including mutation of nested lists or dicts, are
+synchronized to the Redis server.
+
+## Design Requirements
 
 - The dictionary implements Python's `collections.abc.MutableMapping` interface.
 - All values stored in Redis are JSON-encoded, readily inspected with developer

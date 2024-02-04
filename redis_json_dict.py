@@ -9,7 +9,7 @@ class RedisJSONDict(collections.abc.MutableMapping):
 
     >>> import redis
     >>> redis_client = redis.Redis('localhost', 6379)
-    >>> d = RedisJSONDict(redis_client, prefix="my_dict")
+    >>> d = RedisJSONDict(redis_client, prefix='my_dict')
     """
 
     def __init__(
