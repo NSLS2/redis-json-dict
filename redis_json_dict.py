@@ -159,7 +159,7 @@ def observe(value, on_changed):
 
 def _json_encoder_default(content):
     if isinstance(content, ObservableMapping):
-        return dict(content._mapping)  # using internal structure for perf
+        return content._mapping  # using internal structure for perf
     if isinstance(content, ObservableSequence):
-        return list(content._sequence)  # using internal structure for perf
+        return content._sequence  # using internal structure for perf
     raise TypeError
