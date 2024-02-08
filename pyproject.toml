@@ -12,9 +12,6 @@ dependencies = [
   "orjson >=3.9",
 ]
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/redis-json-dict"]
-
 [project.optional-dependencies]
 dev = [
   "pytest >=6.0",
