@@ -1,11 +1,16 @@
 # contents of pyproject.toml
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+
+[tool.hatch]
+version.source = "vcs"
+build.hooks.vcs.version-file = "src/redis_json_dict/version.py"
 
 [project]
 name = "redis-json-dict"
-version = "0.1.0"
+
+dynamic = ["version"]
 
 dependencies = [
   "redis >=5.0",

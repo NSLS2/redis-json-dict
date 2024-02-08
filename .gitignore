@@ -25,3 +25,4 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
+src/redis_json_dict/version.py
