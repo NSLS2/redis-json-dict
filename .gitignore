@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# pytest
+.pytest_cache/
+
+# PyBuilder
+target/
+
+# Editor files
+#mac
+.DS_Store
+*~
+
+#vim
+*.swp
+*.swo
+
+#pycharm
+.idea/
+
+#VSCode
+.vscode/
+
+#Ipython Notebook
+.ipynb_checkpoints
+
