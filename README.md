@@ -13,11 +13,11 @@
 
 ## Usage
 
-```py
+```pycon
 >>> import redis
->>> redis_client = redis.Redis('localhost', 6379)
->>> d = RedisJSONDict(redis_client, prefix='my_dict')
->>> d
+... redis_client = redis.Redis("localhost", 6379)
+... d = RedisJSONDict(redis_client, prefix="my_dict")
+... d
 {}
 ```
 
