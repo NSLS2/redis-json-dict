@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import uuid
 
-import redis
 import pytest
+import redis
+
 from redis_json_dict import RedisJSONDict
 
 
@@ -45,9 +48,9 @@ def test_iteration(d):
     d["b"] = 2
     # Unlike Python dict this does not guarantee that iteration order is
     # stable.
-    assert sorted(list(d.keys())) == ["a", "b"]
-    assert sorted(list(d.values())) == [1, 2]
-    assert sorted(list(d.items())) == [("a", 1), ("b", 2)]
+    assert sorted(d.keys()) == ["a", "b"]
+    assert sorted(d.values()) == [1, 2]
+    assert sorted(d.items()) == [("a", 1), ("b", 2)]
 
 
 def test_contains(d):
