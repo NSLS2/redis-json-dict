@@ -41,8 +41,6 @@ immediately synchronized to the Redis server.
 - Mutating nested items, with operations like `d['sample']['color'] = 'red'` or
   `d['sample']['positions'].append(3)` triggers synchronization.
 
-
-
 <!-- prettier-ignore-start -->
 [actions-badge]:            https://github.com/NSLS2/redis-json-dict/workflows/CI/badge.svg
 [actions-link]:             https://github.com/NSLS2/redis-json-dict/actions
