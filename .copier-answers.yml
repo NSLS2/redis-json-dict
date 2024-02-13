@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 2024.01.24
+_src_path: gh:scientific-python/cookie
+backend: hatch
+email: wwijesing1@bnl.gov
+full_name: Brookhaven National Laboratory
+license: BSD
+org: NSLS2
+project_name: redis-json-dict
+project_short_description: A Redis-backed persistent Python dictionary
+url: https://github.com/NSLS2/redis-json-dict
+vcs: true
