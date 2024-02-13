@@ -51,7 +51,7 @@ class RedisJSONDict(collections.abc.MutableMapping):
             self[key] = observed
 
         observed = observe(value, sync)
-        return observed # noqa: RET504
+        return observed  # noqa: RET504
 
     def __setitem__(self, key, value):
         # SET one JSON-encoded value to a key.
