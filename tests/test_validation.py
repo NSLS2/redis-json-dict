@@ -1,12 +1,8 @@
 from __future__ import annotations
 
-import uuid
-
 import pytest
-import redis
 
-from redis_json_dict import RedisJSONDict
-
+# noqa: ARG001
 
 @pytest.mark.parametrize(
     ("key", "value"),
