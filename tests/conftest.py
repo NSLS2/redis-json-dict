@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import contextlib
+import subprocess
+import time as ttime
 import uuid
 
 import pytest
 import redis
-import contextlib
-import subprocess
-import time as ttime
+
 from redis_json_dict import RedisJSONDict
 
 
@@ -15,7 +16,7 @@ def redis_startup():
     try:
         ps = subprocess.Popen(
             [
-                f"redis-server",
+                "redis-server",
             ],
         )
         ttime.sleep(1.3)  # make sure the process is started
@@ -24,10 +25,13 @@ def redis_startup():
         ps.terminate()
         redis_client = redis.Redis(host="localhost", port=6379)
         redis_client.shutdown()
+
+
 @pytest.fixture(scope="session")
-def redis_server():
-    with redis_startup() as redis_fixture:
+def redis_server():  # noqa: PT004
+    with redis_startup() as redis_fixture:  # noqa: F841
         yield
+
 
 @pytest.fixture()
 def d():
@@ -38,5 +42,3 @@ def d():
     keys = list(redis_client.scan_iter(match=f"{prefix}*"))
     if keys:
         redis_client.delete(*keys)
-
-
