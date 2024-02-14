@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-# noqa: ARG001
+# ruff: noqa: ARG001
+
 
 @pytest.mark.parametrize(
     ("key", "value"),
