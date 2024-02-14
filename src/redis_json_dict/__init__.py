@@ -9,3 +9,5 @@ from __future__ import annotations
 from ._version import version as __version__
 
 __all__ = ["__version__"]
+
+from redis_json_dict.redis_json_dict import RedisJSONDict  # noqa: F401
