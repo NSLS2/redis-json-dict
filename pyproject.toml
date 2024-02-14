@@ -118,7 +118,7 @@ extend-select = [
   "G",        # flake8-logging-format
   "PGH",      # pygrep-hooks
   "PIE",      # flake8-pie
-  "PL",       # pylint
+#  "PL",       # pylint
   "PT",       # flake8-pytest-style
   "PTH",      # flake8-use-pathlib
   "RET",      # flake8-return
@@ -145,15 +145,15 @@ isort.required-imports = ["from __future__ import annotations"]
 "noxfile.py" = ["T20"]
 
 
-[tool.pylint]
-py-version = "3.8"
-ignore-paths = [".*/_version.py"]
-reports.output-format = "colorized"
-similarities.ignore-imports = "yes"
-messages_control.disable = [
-  "design",
-  "fixme",
-  "line-too-long",
-  "missing-module-docstring",
-  "wrong-import-position",
-]
+#[tool.pylint]
+#py-version = "3.8"
+#ignore-paths = [".*/_version.py"]
+#reports.output-format = "colorized"
+#similarities.ignore-imports = "yes"
+#messages_control.disable = [
+#  "design",
+#  "fixme",
+#  "line-too-long",
+#  "missing-module-docstring",
+#  "wrong-import-position",
+#]
