@@ -10,4 +10,8 @@ from ._version import version as __version__
 
 __all__ = ["__version__"]
 
-from redis_json_dict.redis_json_dict import RedisJSONDict  # noqa: F401
+from redis_json_dict.redis_json_dict import (  # noqa: F401
+    ObservableMapping,
+    ObservableSequence,
+    RedisJSONDict,
+)
