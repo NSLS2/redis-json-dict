@@ -160,6 +160,7 @@ class ObservableSequence(collections.abc.MutableSequence):
     def __deepcopy__(self, memo):
         return copy.deepcopy(self._sequence, memo)
 
+
 def observe(value, on_changed):
     "If value is a collection, return a recursively observable copy."
     if isinstance(value, collections.abc.Mapping):

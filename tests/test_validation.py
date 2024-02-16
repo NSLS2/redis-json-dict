@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import copy
+
 import pytest
+
+from redis_json_dict import ObservableMapping, ObservableSequence
 
 # ruff: noqa: ARG001
 
@@ -117,3 +121,13 @@ def test_nested_mutation(redis_server, d):
     d["x"]["y"]["z"]["k"][0]["p"].append(3)
 
     assert d == {"x": {"y": {"z": {"i": [1], "j": 2, "k": [{"p": [3]}]}}}}
+
+
+def test_copy_returns_plain_object(redis_server, d):
+    d["x"] = {}
+    d["y"] = []
+    assert isinstance(d["x"], ObservableMapping)
+    assert isinstance(d["y"], ObservableSequence)
+    c = copy.deepcopy(d)
+    assert isinstance(c["x"], dict)
+    assert isinstance(c["y"], list)
