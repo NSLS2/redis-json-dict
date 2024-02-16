@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections.abc
+import copy
 
 import orjson
 
@@ -76,6 +77,12 @@ class RedisJSONDict(collections.abc.MutableMapping):
             pipe.set(f"{self._prefix}{key}", json)
         pipe.execute()
 
+    def __copy__(self):
+        return dict(self)
+
+    def __deepcopy__(self, memo):
+        return copy.deepcopy(dict(self), memo)
+
 
 class ObservableMapping(collections.abc.MutableMapping):
     def __init__(self, mapping, on_changed):
@@ -104,6 +111,12 @@ class ObservableMapping(collections.abc.MutableMapping):
 
     def __eq__(self, other):
         return self._mapping == other
+
+    def __copy__(self):
+        return copy.copy(self._mapping)
+
+    def __deepcopy__(self, memo):
+        return copy.deepcopy(self._mapping, memo)
 
 
 class ObservableSequence(collections.abc.MutableSequence):
@@ -141,6 +154,11 @@ class ObservableSequence(collections.abc.MutableSequence):
     def __eq__(self, other):
         return self._sequence == other
 
+    def __copy__(self):
+        return copy.copy(self._sequence)
+
+    def __deepcopy__(self, memo):
+        return copy.deepcopy(self._sequence, memo)
 
 def observe(value, on_changed):
     "If value is a collection, return a recursively observable copy."
