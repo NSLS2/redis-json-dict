@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+import asyncio
 import contextlib
 import subprocess
 import time as ttime
 import uuid
 
+import databroker
 import pytest
 import redis
+from bluesky import RunEngine
+from databroker import Broker
 
 from redis_json_dict import RedisJSONDict
 
@@ -42,3 +46,19 @@ def d():
     keys = list(redis_client.scan_iter(match=f"{prefix}*"))
     if keys:
         redis_client.delete(*keys)
+
+
+@pytest.fixture()
+def db():
+    """Return a data broker"""
+    db = Broker.named("temp")
+    with contextlib.suppress(Exception):
+        databroker.assets.utils.install_sentinels(db.reg.config, version=1)
+    return db
+
+
+@pytest.fixture()
+def RE():
+    loop = asyncio.new_event_loop()
+    loop.set_debug(True)
+    return RunEngine({}, loop=loop)

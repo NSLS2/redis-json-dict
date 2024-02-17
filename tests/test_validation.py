@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import copy
 
+import bluesky.plans as bp
 import pytest
+from ophyd.sim import det
 
 from redis_json_dict import ObservableMapping, ObservableSequence
 
@@ -131,3 +133,46 @@ def test_copy_returns_plain_object(redis_server, d):
     c = copy.deepcopy(d)
     assert isinstance(c["x"], dict)
     assert isinstance(c["y"], list)
+
+
+def test_with_runengine_and_databroker(redis_server, d, RE, db):
+    d["proposal"] = {
+        "proposal_id": 123456,
+        "pi": "John Doe",
+        "title": "Cool experiment #1",
+    }
+    RE.md = d
+
+    RE.subscribe(db.insert)
+
+    with pytest.deprecated_call(), pytest.raises(TypeError):
+        RE(
+            bp.count([det], md={"metadata from plan": "awesome run"}),
+            md={"metadata from RE": "just a count"},
+        )
+
+
+def test_with_runengine_and_databroker_deepdoc(redis_server, d, RE, db):
+    d["proposal"] = {
+        "proposal_id": 654321,
+        "pi": "Jane Doe",
+        "title": "Cool experiment #2",
+    }
+    RE.md = d
+
+    def insert(name, doc):
+        if name == "start":
+            doc = copy.deepcopy(doc)
+        db.insert(name, doc)
+
+    RE.subscribe(insert)
+
+    with pytest.deprecated_call():
+        (uid,) = RE(
+            bp.count([det], md={"metadata from plan": "awesome run"}),
+            md={"metadata from RE": "just a count"},
+        )
+
+    hdr = db[uid]
+    assert hdr.start["proposal"] == d["proposal"]
+    assert hdr.start["proposal"] is not d["proposal"]

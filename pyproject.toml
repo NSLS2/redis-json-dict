@@ -37,11 +37,15 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
+  "bluesky",
+  "databroker",
+  "ophyd",
   "pytest >=6",
   "pytest-cov >=3",
 ]
 dev = [
   "pre-commit",
+  "pylint",
   "pytest >=6",
   "pytest-cov >=3",
 ]
