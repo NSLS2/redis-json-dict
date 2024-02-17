@@ -157,8 +157,11 @@ Thumbs.db
 *~
 *.swp
 
-#VSCode
+# VSCode
 .vscode/
 
-#pycharm
+# pycharm
 .idea/
+
+# Redis dump
+dump.rdb
