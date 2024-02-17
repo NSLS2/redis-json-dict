@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+from pprint import pprint
 
 import bluesky.plans as bp
 import pytest
@@ -174,5 +175,6 @@ def test_with_runengine_and_databroker_deepdoc(redis_server, d, RE, db):
         )
 
     hdr = db[uid]
+    pprint(hdr.start)
     assert hdr.start["proposal"] == d["proposal"]
     assert hdr.start["proposal"] is not d["proposal"]
