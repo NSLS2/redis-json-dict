@@ -37,8 +37,8 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-  "bluesky",
-  "databroker",
+  "bluesky>=1.10.0",
+  "databroker[complete]>=2.0.0b36",
   "ophyd",
   "pytest >=6",
   "pytest-cov >=3",

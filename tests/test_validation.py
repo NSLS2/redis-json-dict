@@ -146,7 +146,7 @@ def test_with_runengine_and_databroker(redis_server, d, RE, db):
 
     RE.subscribe(db.insert)
 
-    with pytest.deprecated_call(), pytest.raises(TypeError):
+    with pytest.raises(TypeError):
         RE(
             bp.count([det], md={"metadata from plan": "awesome run"}),
             md={"metadata from RE": "just a count"},
@@ -168,11 +168,10 @@ def test_with_runengine_and_databroker_deepdoc(redis_server, d, RE, db):
 
     RE.subscribe(insert)
 
-    with pytest.deprecated_call():
-        (uid,) = RE(
-            bp.count([det], md={"metadata from plan": "awesome run"}),
-            md={"metadata from RE": "just a count"},
-        )
+    (uid,) = RE(
+        bp.count([det], md={"metadata from plan": "awesome run"}),
+        md={"metadata from RE": "just a count"},
+    )
 
     hdr = db[uid]
     pprint(hdr.start)

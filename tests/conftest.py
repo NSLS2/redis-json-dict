@@ -51,7 +51,8 @@ def d():
 @pytest.fixture()
 def db():
     """Return a data broker"""
-    db = Broker.named("temp")
+    with pytest.deprecated_call():
+        db = Broker.named("temp")
     with contextlib.suppress(Exception):
         databroker.assets.utils.install_sentinels(db.reg.config, version=1)
     return db
