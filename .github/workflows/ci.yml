@@ -15,6 +15,7 @@ env:
   FORCE_COLOR: 3
   TEST_REDIS_HOST: "localhost"
   TEST_REDIS_PORT: 63790
+  CLEAR_REDIS: "true" # by default, prevent clearing redis, in case we are using a live instance
 
 jobs:
   pre-commit:
