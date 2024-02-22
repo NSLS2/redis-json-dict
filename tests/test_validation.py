@@ -18,14 +18,14 @@ from redis_json_dict import ObservableMapping, ObservableSequence
         ("object", {"A": "a", "B": 2, "C": 3.0}),
     ],
 )
-def test_round_trip(redis_server, d, key, value):
+def test_round_trip(d, key, value):
     d[key] = value
     assert d[key] == value
     assert len(d) == 1
     assert list(d) == [key]
 
 
-def test_missing(redis_server, d):
+def test_missing(d):
     d["a"] = 1
     with pytest.raises(KeyError):
         d["does not exist"]
@@ -33,7 +33,7 @@ def test_missing(redis_server, d):
     assert d.get("does not exist", "default") == "default"
 
 
-def test_iteration(redis_server, d):
+def test_iteration(d):
     d["a"] = 1
     d["b"] = 2
     # Unlike Python dict this does not guarantee that iteration order is
@@ -43,20 +43,20 @@ def test_iteration(redis_server, d):
     assert sorted(d.items()) == [("a", 1), ("b", 2)]
 
 
-def test_contains(redis_server, d):
+def test_contains(d):
     d["a"] = 1
     assert "a" in d
     assert "b" not in d
 
 
-def test_update(redis_server, d):
+def test_update(d):
     d["unchanged"] = 0
     d["altered"] = 1
     d.update({"altered": 2, "added": 3})
     assert dict(d) == {"unchanged": 0, "altered": 2, "added": 3}
 
 
-def test_setdefault(redis_server, d):
+def test_setdefault(d):
     d["unchanged"] = 0
     d.setdefault("unchanged", 1)  # should have no effect
     assert d["unchanged"] == 0
@@ -64,7 +64,7 @@ def test_setdefault(redis_server, d):
     assert d["added"] == 1
 
 
-def test_pop(redis_server, d):
+def test_pop(d):
     d["a"] = 1
     d.pop("a")
     assert len(d) == 0
@@ -74,7 +74,7 @@ def test_pop(redis_server, d):
     d.pop("a", None)
 
 
-def test_popitem(redis_server, d):
+def test_popitem(d):
     d["a"] = 1
     item = d.popitem()
     assert item == ("a", 1)
@@ -82,14 +82,14 @@ def test_popitem(redis_server, d):
         d.popitem()
 
 
-def test_clear(redis_server, d):
+def test_clear(d):
     d.update({"a": 1, "b": 2})
     d.clear()
     assert len(d) == 0
     assert dict(d) == {}
 
 
-def test_mutation(redis_server, d):
+def test_mutation(d):
     # dict
     d["x"] = [1, 2]
     d["x"].append(3)
@@ -107,7 +107,7 @@ def test_mutation(redis_server, d):
     assert d["y"] == {"b": 2, "c": 3}
 
 
-def test_nested_mutation(redis_server, d):
+def test_nested_mutation(d):
     # Mutable lists and dicts and dicts in lists
     d["x"] = {}
     d["x"]["y"] = {}
@@ -123,7 +123,7 @@ def test_nested_mutation(redis_server, d):
     assert d == {"x": {"y": {"z": {"i": [1], "j": 2, "k": [{"p": [3]}]}}}}
 
 
-def test_copy_returns_plain_object(redis_server, d):
+def test_copy_returns_plain_object(d):
     d["x"] = {}
     d["y"] = []
     assert isinstance(d["x"], ObservableMapping)

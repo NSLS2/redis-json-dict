@@ -13,6 +13,9 @@ concurrency:
 
 env:
   FORCE_COLOR: 3
+  TEST_REDIS_HOST: "localhost"
+  TEST_REDIS_PORT: 63790
+  CLEAR_REDIS: "true" # by default, prevent clearing redis, in case we are using a live instance
 
 jobs:
   pre-commit:
@@ -53,8 +56,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
 
-      - name: Install redis-server
-        run: sudo apt install redis-server
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.8.0
+        with:
+          redis-port: ${{ env.TEST_REDIS_PORT }}
 
       - name: Install package
         run: python -m pip install .[test]
