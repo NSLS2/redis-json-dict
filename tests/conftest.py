@@ -15,7 +15,7 @@ def d():
         host=os.environ.get("TEST_REDIS_HOST", "localhost"),
         port=os.environ.get("TEST_REDIS_PORT", 63798),
     )  # use a different port than usual because are clearing it!
-    if os.environ.get("CLEAR_REDIS", "nottrue") == "true":
+    if os.environ.get("CLEAR_REDIS", "false") == "true":
         redis_client.flushall()
     prefix = uuid.uuid4().hex
     yield RedisJSONDict(redis_client, prefix=prefix)
