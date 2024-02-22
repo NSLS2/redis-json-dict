@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import uuid
 
 import pytest
@@ -10,7 +11,10 @@ from redis_json_dict import RedisJSONDict
 
 @pytest.fixture()
 def d():
-    redis_client = redis.Redis(host="localhost", port=6379)
+    redis_client = redis.Redis(
+        host=os.environ.get("TEST_REDIS_HOST", "localhost"),
+        port=os.environ.get("TEST_REDIS_PORT", 63798),
+    )  # use a different port than usual because are clearing it!
     redis_client.flushall()
     prefix = uuid.uuid4().hex
     yield RedisJSONDict(redis_client, prefix=prefix)
