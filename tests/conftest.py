@@ -11,6 +11,7 @@ from redis_json_dict import RedisJSONDict
 @pytest.fixture()
 def d():
     redis_client = redis.Redis(host="localhost", port=6379)
+    redis_client.flushall()
     prefix = uuid.uuid4().hex
     yield RedisJSONDict(redis_client, prefix=prefix)
     # Clean up.
