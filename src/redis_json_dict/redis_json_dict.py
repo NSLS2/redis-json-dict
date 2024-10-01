@@ -56,7 +56,9 @@ class RedisJSONDict(collections.abc.MutableMapping):
 
     def __setitem__(self, key, value):
         # SET one JSON-encoded value to a key.
-        json = orjson.dumps(value, default=_json_encoder_default)
+        json = orjson.dumps(
+            value, default=_json_encoder_default, option=orjson.OPT_SERIALIZE_NUMPY
+        )
         self._redis_client.set(f"{self._prefix}{key}", json)
 
     def __delitem__(self, key):
@@ -73,7 +75,9 @@ class RedisJSONDict(collections.abc.MutableMapping):
         # Batch (a performance optimization over default behavior)
         pipe = self._redis_client.pipeline()
         for key, value in d.items():
-            json = orjson.dumps(value, default=_json_encoder_default)
+            json = orjson.dumps(
+                value, default=_json_encoder_default, option=orjson.OPT_SERIALIZE_NUMPY
+            )
             pipe.set(f"{self._prefix}{key}", json)
         pipe.execute()
 
