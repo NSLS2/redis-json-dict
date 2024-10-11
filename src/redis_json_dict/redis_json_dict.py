@@ -29,7 +29,7 @@ class RedisJSONDict(collections.abc.MutableMapping):
     def __iter__(self):
         prefix_len = len(self._prefix)
         yield from (
-            key[prefix_len:].decode()  # slice off prefix and decode to str
+            key.decode()[prefix_len:]  # decode to str and slice off prefix
             # SCAN for all keys matching the prefix.
             # Note that, unlike KEYS, this is incremental/non-blocking.
             for key in self._redis_client.scan_iter(match=f"{self._prefix}*")

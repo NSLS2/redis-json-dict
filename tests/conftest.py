@@ -17,7 +17,7 @@ def d():
     )  # use a different port than usual because are clearing it!
     if os.environ.get("CLEAR_REDIS", "false") == "true":
         redis_client.flushall()
-    prefix = uuid.uuid4().hex
+    prefix = uuid.uuid4().hex + '\N{Snowman}'
     yield RedisJSONDict(redis_client, prefix=prefix)
     # Clean up.
     keys = list(redis_client.scan_iter(match=f"{prefix}*"))
