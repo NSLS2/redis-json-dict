@@ -113,14 +113,18 @@ def test_nested_mutation(d):
     d["x"]["y"] = {}
     d["x"]["y"]["z"] = {}
     d["x"]["y"]["z"]["i"] = []
-    d["x"]["y"]["z"]["i"].append(1)
+    lsti = d["x"]["y"]["z"]["i"]
+    lsti.append([])
+    lsti[0].append(1)
     d["x"]["y"]["z"]["j"] = 2
     d["x"]["y"]["z"]["k"] = []
     d["x"]["y"]["z"]["k"].append({})
     d["x"]["y"]["z"]["k"][0]["p"] = []
     d["x"]["y"]["z"]["k"][0]["p"].append(3)
 
-    assert d == {"x": {"y": {"z": {"i": [1], "j": 2, "k": [{"p": [3]}]}}}}
+    assert d["x"]["y"]["z"]["i"] == lsti
+
+    assert d == {"x": {"y": {"z": {"i": [[1]], "j": 2, "k": [{"p": [3]}]}}}}
 
 
 def test_copy_returns_plain_object(d):
