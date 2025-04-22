@@ -12,16 +12,19 @@ class RedisJSONDict(collections.abc.MutableMapping):
 
     >>> import redis
     >>> redis_client = redis.Redis('localhost', 6379)
-    >>> d = RedisJSONDict(redis_client, prefix='my_dict')
+    >>> d = RedisJSONDict(redis_client, prefix='my_dict', prefix_delim='-')
     """
 
     def __init__(
         self,
         redis_client,
         prefix,
+        prefix_delim="-"
     ):
         self._redis_client = redis_client
-        self._prefix = prefix
+
+        # Add an optional delimeter character to the provided prefix internally
+        self._prefix = prefix + prefix_delim
 
     def __repr__(self):
         return repr(dict(self))
