@@ -52,7 +52,7 @@ class RedisJSONDict(collections.abc.MutableMapping):
             self[key] = observed
 
         observed = observe(value, sync)
-        return observed  # noqa: RET504
+        return observed
 
     def __setitem__(self, key, value):
         # SET one JSON-encoded value to a key.
@@ -103,7 +103,12 @@ class ObservableMapping(collections.abc.MutableMapping):
         return len(self._mapping)
 
     def __getitem__(self, key):
-        return self._mapping[key]
+        def sync():
+            self[key] = observed
+
+        observed = observe(self._mapping[key], sync)
+
+        return observed
 
     def __setitem__(self, key, value):
         self._mapping[key] = value
@@ -138,7 +143,11 @@ class ObservableSequence(collections.abc.MutableSequence):
         return len(self._sequence)
 
     def __getitem__(self, index):
-        return self._sequence[index]
+        def sync():
+            self[index] = observed
+
+        observed = observe(self._sequence[index], sync)
+        return observed
 
     def __setitem__(self, index, value):
         self._sequence[index] = value
