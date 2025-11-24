@@ -22,10 +22,10 @@ jobs:
     name: Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.x"
       - uses: pre-commit/action@v3.0.1
@@ -47,17 +47,17 @@ jobs:
         runs-on: [ubuntu-latest] # TODO incorporate redis-server installation for macos-latest, windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
 
       - name: Start Redis
-        uses: supercharge/redis-github-action@1.8.0
+        uses: supercharge/redis-github-action@1.8.1
         with:
           redis-port: ${{ env.TEST_REDIS_PORT }}
 
@@ -70,4 +70,4 @@ jobs:
           --durations=20
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v5.4.0
+        uses: codecov/codecov-action@v5.5.1
